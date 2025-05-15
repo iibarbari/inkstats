@@ -88,7 +88,6 @@ export default function WeeklyReadingBarChart({ ...props }: Props) {
           tickLine={false}
           tickMargin={10}
           axisLine={false}
-          tickFormatter={(value) => dayjs(value).format("ddd, MMM D")}
         />
 
         <ChartTooltip content={<ChartTooltipContent />} />
