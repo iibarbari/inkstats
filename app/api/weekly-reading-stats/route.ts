@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { page_stat_data } from '@/lib/schemas';
 import dayjs from 'dayjs';
-import { and, countDistinct, eq, gte, lt, lte, sql, sum } from 'drizzle-orm';
+import { and, countDistinct, gte, lt, sql, sum } from 'drizzle-orm';
 import weekday from 'dayjs/plugin/weekday';
 
 dayjs.extend(weekday);

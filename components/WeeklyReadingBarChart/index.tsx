@@ -8,10 +8,9 @@ import {
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/ui/chart';
-import { Bar, BarChart, CartesianGrid, Line, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { BookOpenTextIcon, TimerIcon } from 'lucide-react';
 import { JSX, PropsWithoutRef, useEffect, useState } from 'react';
-import dayjs from 'dayjs';
 
 const chartConfig = {
   minutes: {
