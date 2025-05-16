@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KOReader Stats Viewer 📖📊
 
-## Getting Started
+A privacy-first web app for visualizing your **reading statistics exported from KOReader**.
 
-First, run the development server:
+Built with **Next.js App Router** and **TypeScript**, this tool parses your KOReader SQLite export entirely **in your browser**, ensuring your data **never leaves your device**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> **Note:** This project is not affiliated with the KOReader team.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 🧠 Client-side only: Your data is never uploaded or stored remotely.
+- 📁 Upload your `reading-statistics.sqlite` file.
+- 📊 Get beautiful visualizations of your reading habits.
+- ⏱️ Fast, lightweight, and session-based — nothing is persisted after the tab is closed.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Privacy and Technical Design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Uses [`sql.js`](https://github.com/sql-js/sql.js) to query the uploaded SQLite file in memory.
+- The SQLite file is **stored temporarily in memory (not IndexedDB or LocalStorage)**.
+- All calculations and charts are rendered based on this in-memory DB, ensuring:
+    - ✅ Privacy: No uploads, no backend.
+    - 🧽 Ephemeral data: Once you close the tab, everything is gone.
+- File size soft-limit: ⚠️ Uploads above **10MB** are discouraged for performance reasons. The app is optimized for **1–3 years of logs (~3–9MB)**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛣️ Roadmap & Future Plans
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 📅 Time-filtering (e.g. monthly/weekly trends)
+- 📈 More chart types (e.g. heatmaps, top books, active hours)
+- 💾 Optional export for filtered summaries
+- ⚙️ Light/dark theme toggle
+- 📉 Graceful fallback for corrupted or unsupported files
+- ✂️ Automatic trimming (e.g. show "last 3 years only")
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🤝 Contributing
+
+Pull requests and issues are **welcome**!
+
+If you'd like to:
+- Suggest a new feature
+- Improve existing components or visualizations
+- Report a bug or data parsing problem
+
+...please [open an issue](https://github.com/your-repo/issues) or submit a PR.
+
+---
+
+## 📄 License
+
+This project is licensed under the [CC BY-NC 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/).  
+You are free to use and deploy it non-commercially. Commercial use is not permitted.
+
+---
+
+## 🙏 Acknowledgements
+
+- [KOReader](https://github.com/koreader/koreader) — for enabling access to reading stats
+- [sql.js](https://github.com/sql-js/sql.js) — WebAssembly-based SQLite in the browser
