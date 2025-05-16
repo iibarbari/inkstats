@@ -7,6 +7,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import isYesterday from 'dayjs/plugin/isYesterday';
 import { SiteHeader } from '@/components/Header';
+import StatisticsProvider from '@/components/StatisticsProvider';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekday);
@@ -36,8 +37,10 @@ export default function RootLayout({
     <body
       className={`${inter.variable} antialiased`}
     >
-    <SiteHeader />
-    {children}
+    <StatisticsProvider>
+      <SiteHeader />
+      {children}
+    </StatisticsProvider>
     </body>
     </html>
   );
