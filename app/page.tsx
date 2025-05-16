@@ -1,20 +1,25 @@
 "use client";
 
-import { lazy, Suspense, useContext } from 'react';
+import { useContext } from 'react';
 import { StatisticsContext } from '@/contexts/StatisticsContext';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import dynamic from 'next/dynamic';
 
-const FileUploadForm = lazy(() => import("@/components/FileUploadForm"));
+const FileUploadForm = dynamic(() => import("@/components/FileUploadForm"), {
+  ssr: false,
+  loading: () => <LoadingSpinner />
+});
 
 export default function Home() {
   const { db } = useContext(StatisticsContext);
 
   if (db === null) {
     return (
-      <Suspense>
-        <main className="grid gap-12 my-16">
+      <main className="grid gap-12 my-16">
+        <section className="container">
           <FileUploadForm />
-        </main>
-      </Suspense>
+        </section>
+      </main>
     );
   }
 

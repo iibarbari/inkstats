@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, PropsWithoutRef, Suspense, useContext, useState } from 'react';
+import { JSX, PropsWithoutRef, useContext, useState } from 'react';
 import { StatisticsContext } from '@/contexts/StatisticsContext';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -9,7 +9,6 @@ import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 export const formSchema = z.object({
@@ -24,9 +23,9 @@ export const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-type FileUploadFormProps = PropsWithoutRef<JSX.IntrinsicElements["div"]>;
+type FileUploadFormProps = PropsWithoutRef<JSX.IntrinsicElements["form"]>;
 
-export default function FileUploadForm({ className, ...props }: FileUploadFormProps) {
+export default function FileUploadForm({ ...props }: FileUploadFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setDb } = useContext(StatisticsContext);
   const form = useForm<FormData>({
@@ -55,57 +54,53 @@ export default function FileUploadForm({ className, ...props }: FileUploadFormPr
 
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <div {...props} className={cn("container", className)}>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <Form {...form} {...props}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-            {form.formState.errors.root && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  {form.formState.errors.root.message}
-                </AlertDescription>
-              </Alert>
-            )}
+        {form.formState.errors.root && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              {form.formState.errors.root.message}
+            </AlertDescription>
+          </Alert>
+        )}
 
-            <FormField
-              control={form.control}
-              name="file"
-              render={({ field: { value, onChange, ...fieldProps } }) => (
-                <FormItem>
-                  <FormLabel>Upload file</FormLabel>
+        <FormField
+          control={form.control}
+          name="file"
+          render={({ field: { value, onChange, ...fieldProps } }) => (
+            <FormItem>
+              <FormLabel>Upload file</FormLabel>
 
-                  <div className="flex flex-row gap-2 items-center">
-                    {isLoading && <LoadingSpinner />}
+              <div className="flex flex-row gap-2 items-center">
+                {isLoading && <LoadingSpinner />}
 
-                    <FormControl>
-                      <Input
-                        {...fieldProps}
-                        type="file"
-                        disabled={isLoading}
-                        accept=".sqlite3"
-                        onChange={(event) => {
-                          onChange(event.target.files && event.target.files[0]);
+                <FormControl>
+                  <Input
+                    {...fieldProps}
+                    type="file"
+                    disabled={isLoading}
+                    accept=".sqlite3"
+                    onChange={(event) => {
+                      onChange(event.target.files && event.target.files[0]);
 
-                          form.handleSubmit(onSubmit)();
-                        }}
-                        name="file"
-                      />
-                    </FormControl>
-                  </div>
+                      form.handleSubmit(onSubmit)();
+                    }}
+                    name="file"
+                  />
+                </FormControl>
+              </div>
 
-                  <FormDescription>
-                    Please upload your Kindle statistics.sqlite3 file.
-                  </FormDescription>
+              <FormDescription>
+                Please upload your Kindle statistics.sqlite3 file.
+              </FormDescription>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </div>
-    </Suspense>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
   );
 };
