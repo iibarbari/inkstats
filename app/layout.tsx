@@ -8,6 +8,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import isYesterday from 'dayjs/plugin/isYesterday';
 import { SiteHeader } from '@/components/Header';
 import StatisticsProvider from '@/components/StatisticsProvider';
+import { ReactNode } from 'react';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekday);
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">

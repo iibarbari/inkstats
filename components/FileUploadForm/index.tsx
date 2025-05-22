@@ -69,7 +69,7 @@ export default function FileUploadForm({ ...props }: FileUploadFormProps) {
         <FormField
           control={form.control}
           name="file"
-          render={({ field: { value, onChange, ...fieldProps } }) => (
+          render={({ field: { onChange, value: _, ...fieldProps } }) => (
             <FormItem>
               <FormLabel>Upload file</FormLabel>
 

@@ -5,6 +5,7 @@ import { StatisticsContext } from '@/contexts/StatisticsContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import dynamic from 'next/dynamic';
 import SummaryCards from '@/components/SummaryCards';
+import WeeklyReadingBarChart from '@/components/WeeklyReadingBarChart';
 
 const FileUploadForm = dynamic(() => import("@/components/FileUploadForm"), {
   ssr: false,
@@ -20,32 +21,19 @@ export default function ClientEntry() {
         <section className="container">
           <FileUploadForm />
         </section>
-
-        <section className="container">
-          <h2>How to get your reading statistics file:</h2>
-          <ol>
-            <li>Connect your Kindle device to your computer using a USB cable</li>
-
-            <li>Navigate to the internal storage of your Kindle</li>
-
-            <li>Look for the folder named "system" or ".sdr"</li>
-
-            <li>Find the file named "statistics.sqlite" or "cr.db"</li>
-
-            <li>Copy this file to your computer</li>
-
-            <li>Upload the file above</li>
-          </ol>
-        </section>
       </>
     );
   }
 
   return (
-    <main className="grid gap-12 my-16">
-      <section className="container">
+    <>
+      <section className="container mb-16">
         <SummaryCards />
       </section>
-    </main>
+
+      <section className="container grid grid-cols-1 lg:grid-cols-2 gap-4 mb-16">
+        <WeeklyReadingBarChart />
+      </section>
+    </>
   );
 }

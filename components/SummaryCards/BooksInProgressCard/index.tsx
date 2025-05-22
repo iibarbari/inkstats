@@ -15,7 +15,9 @@ export default function BooksInProgressCard() {
       .prepare(`
           SELECT COUNT(DISTINCT id_book) as currentlyReadingCount
           FROM page_stat_data
-          WHERE strftime('%W', datetime(start_time, 'unixepoch', 'localtime')) = strftime('%W', '-6 days', 'localtime')
+          WHERE date (datetime(start_time, 'unixepoch', 'localtime')) 
+          BETWEEN date ('now', 'weekday 0', '-6 days') 
+          AND date ('now', 'weekday 0')
       `)
       .getAsObject({ $start: 1, $end: 1 });
 

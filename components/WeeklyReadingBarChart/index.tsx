@@ -10,7 +10,9 @@ import {
 } from '@/components/ui/chart';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { BookOpenTextIcon, TimerIcon } from 'lucide-react';
-import { JSX, PropsWithoutRef, useEffect, useState } from 'react';
+import { JSX, PropsWithoutRef, useContext, useMemo } from 'react';
+import { StatisticsContext } from '@/contexts/StatisticsContext';
+import dayjs from 'dayjs';
 
 const chartConfig = {
   minutes: {
@@ -34,48 +36,38 @@ type ChartData = {
 }
 
 export default function WeeklyReadingBarChart({ ...props }: Props) {
-  const [data, setData] = useState<Array<ChartData>>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
+  const { db } = useContext(StatisticsContext);
 
-  useEffect(() => {
-    async function fetchWeeklyReadingData() {
-      const res = await fetch("/api/weekly-reading-stats");
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
+  const data = useMemo<ChartData[] | null>(() => {
+    if (db === null) return null;
 
-      const data = await res.json();
+    const result = db.exec(`
+        WITH last_sunday AS (SELECT date ('now', 'weekday 0', '-14 days' ) AS sun), week_days AS (
+        SELECT date (sun, '+' || n || ' days') AS day
+        FROM last_sunday, (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3
+            UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6)
+            )
+        SELECT wd.day,
+               COALESCE(SUM(psd.duration), 0)        AS seconds,
+               COALESCE(COUNT(DISTINCT psd.page), 0) AS pages
+        FROM week_days wd
+                 LEFT JOIN page_stat_data psd
+                           ON wd.day = strftime('%Y-%m-%d', psd.start_time, 'unixepoch')
+        GROUP BY wd.day
+        ORDER BY wd.day ASC;
+    `);
 
-      setData(data);
-    }
+    return result[0].values.map(([day, seconds, pages]) => {
+      return {
+        day: dayjs(String(day)).format("ddd, MMM D"),
+        minutes: Math.floor(Number(seconds) / 60 || 0),
+        pages: Number(pages) || 0,
+      };
+    });
+  }, [db]);
 
-    setIsLoading(true);
-
-    fetchWeeklyReadingData()
-      .then(() => setIsLoading(false))
-      .catch((error) => {
-        setError(error);
-        setIsLoading(false);
-      });
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-gray-500">Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-red-500">Something unexpacted happened</p>
-      </div>
-    );
-  }
+  if (data === null) return null;
 
   return (
     <ChartContainer {...props} config={chartConfig}>

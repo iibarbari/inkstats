@@ -18,7 +18,7 @@ export default function StatisticsProvider({ children }: { children: ReactNode }
     async function loadDatabase() {
       try {
         const SQL = await initSqlJs({
-          locateFile: filename => `/sql-wasm.wasm`
+          locateFile: () => `/sql-wasm.wasm`
         });
         setDb(new SQL.Database(file));
       } catch (err) {
