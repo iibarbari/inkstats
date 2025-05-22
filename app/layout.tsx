@@ -9,6 +9,8 @@ import isYesterday from 'dayjs/plugin/isYesterday';
 import { SiteHeader } from '@/components/Header';
 import StatisticsProvider from '@/components/StatisticsProvider';
 import { ReactNode } from 'react';
+import Footer from '@/components/Footer';
+import Script from 'next/script';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekday);
@@ -35,16 +37,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>"
-    />
+    <head>
+      <link
+        rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>"
+      />
+
+      {process.env.NODE_ENV === "production" && (
+        <Script async src="https://www.poeticmetric.com/pm.js" />
+      )}
+    </head>
     <body
       className={`${inter.variable} antialiased`}
     >
     <StatisticsProvider>
-      <SiteHeader />
-      {children}
+      <div className="flex flex-col min-h-screen">
+        <SiteHeader />
+        {children}
+        <Footer />
+      </div>
     </StatisticsProvider>
     </body>
     </html>
