@@ -1,4 +1,4 @@
-# KOReader Stats Viewer 📖📊
+# inkstats | KOReader Reading Statistics Viewer 📖📊
 
 A privacy-first web app for visualizing your **reading statistics exported from KOReader**.
 
