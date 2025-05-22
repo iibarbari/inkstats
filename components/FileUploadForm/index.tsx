@@ -16,8 +16,8 @@ export const formSchema = z.object({
     .refine((file) => file.size < 5000000, {
       message: 'Your file must be less than 5MB.',
     })
-    .refine(file => file.name.match(/\.(sqlite3?|db)$/), {
-      message: 'Unsupported file type. Please upload a .sqlite3 or .db file.',
+    .refine(file => file.name.match(/\.(sqlite3?|file)$/), {
+      message: 'Unsupported file type. Please upload a .sqlite3 or .file file.',
     })
 });
 
@@ -27,7 +27,7 @@ type FileUploadFormProps = PropsWithoutRef<JSX.IntrinsicElements["form"]>;
 
 export default function FileUploadForm({ ...props }: FileUploadFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { setDb } = useContext(StatisticsContext);
+  const { setFile } = useContext(StatisticsContext);
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
@@ -35,14 +35,14 @@ export default function FileUploadForm({ ...props }: FileUploadFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const file = values.file;
 
-    setDb(null);
+    setFile(null);
     setIsLoading(true);
 
     try {
       const arrayBuffer = await file.arrayBuffer();
       const uint8Array = new Uint8Array(arrayBuffer);
 
-      setDb(uint8Array);
+      setFile(uint8Array);
     } catch {
       form.setError("root", {
         message: "An error occurred while reading the file. Please try again.",

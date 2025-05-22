@@ -43,6 +43,6 @@ next-env.d.ts
 # local env files
 *.sqlite3
 .idea
-local.db
+local.file
 *.sqlite3-shm
 *.sqlite3-wal

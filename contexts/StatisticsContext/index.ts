@@ -3,11 +3,11 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
 export type StatisticsContextType = {
-  db: Uint8Array | null;
-  setDb: Dispatch<SetStateAction<StatisticsContextType["db"]>>
+  file: Uint8Array | null;
+  setFile: Dispatch<SetStateAction<StatisticsContextType["file"]>>
 }
 
 export const StatisticsContext = createContext<StatisticsContextType>({
-  db: null,
-  setDb: () => null,
+  file: null,
+  setFile: () => null,
 });
