@@ -24,8 +24,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "KOReader Reading Statistics Viewer",
-  description: "This is a simple viewer for KOReader reading statistics. It is not affiliated with the KOReader project.",
+  title: "inkstats",
+  description: "inkstats is a simple viewer for KOReader reading statistics. It is not affiliated with the KOReader project.",
 };
 
 export default function RootLayout({
@@ -35,6 +35,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>"
+    />
     <body
       className={`${inter.variable} antialiased`}
     >

@@ -13,9 +13,9 @@ const FileUploadForm = dynamic(() => import("@/components/FileUploadForm"), {
 });
 
 export default function ClientEntry() {
-  const { file } = useContext(StatisticsContext);
+  const { db } = useContext(StatisticsContext);
 
-  if (file === null) {
+  if (db === null) {
     return (
       <>
         <section className="container">

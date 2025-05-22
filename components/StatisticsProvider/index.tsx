@@ -29,9 +29,18 @@ export default function StatisticsProvider({ children }: { children: ReactNode }
     loadDatabase();
   }, [file]);
 
+  function resetDb() {
+    if (db) {
+      db.close();
+
+      setDb(null);
+      setFile(null);
+    }
+  }
+
 
   const values = useMemo<StatisticsContextType>(() => {
-    return { file, setFile, db };
+    return { file, setFile, db, resetDb };
   }, [file, db]);
 
   return (
