@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { StatisticsContext } from '@/contexts/StatisticsContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import dynamic from 'next/dynamic';
+import SummaryCards from '@/components/SummaryCards';
 
 const FileUploadForm = dynamic(() => import("@/components/FileUploadForm"), {
   ssr: false,
@@ -42,9 +43,9 @@ export default function ClientEntry() {
 
   return (
     <main className="grid gap-12 my-16">
-      <div className="container">
-        hello
-      </div>
+      <section className="container">
+        <SummaryCards />
+      </section>
     </main>
   );
 }

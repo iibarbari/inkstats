@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 interface Book {
   id: number;
   title: string;
@@ -9,4 +11,16 @@ interface Book {
   language: string;
   total_read_time: number;
   total_read_pages: number;
+}
+
+
+type Stat = {
+  title: string;
+  value: string;
+  description?: string;
+  icon?: ReactNode;
+  trend?: {
+    value: number;
+    status: "positive" | "negative" | "neutral";
+  };
 }

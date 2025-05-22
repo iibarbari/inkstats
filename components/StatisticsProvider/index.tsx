@@ -3,6 +3,10 @@
 import { StatisticsContext, type StatisticsContextType } from '@/contexts/StatisticsContext';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import initSqlJs, { Database } from "sql.js";
+import dayjs from 'dayjs';
+import weekday from 'dayjs/plugin/weekday';
+
+dayjs.extend(weekday);
 
 export default function StatisticsProvider({ children }: { children: ReactNode }) {
   const [file, setFile] = useState<StatisticsContextType["file"]>(null);
@@ -15,7 +19,6 @@ export default function StatisticsProvider({ children }: { children: ReactNode }
       try {
         const SQL = await initSqlJs({
           locateFile: filename => `/sql-wasm.wasm`
-          // locateFile: (file: string) => `https://sql.js.org/dist/${file}`
         });
         setDb(new SQL.Database(file));
       } catch (err) {
@@ -26,22 +29,10 @@ export default function StatisticsProvider({ children }: { children: ReactNode }
     loadDatabase();
   }, [file]);
 
-  useEffect(() => {
-    if (db === null) {
-      console.error("Database is null");
-      return;
-    }
-
-    console.log("hello");
-
-    const result = db.exec("SELECT * FROM book");
-
-    console.log(result, "result");
-  }, [db]);
 
   const values = useMemo<StatisticsContextType>(() => {
-    return { file, setFile };
-  }, [file]);
+    return { file, setFile, db };
+  }, [file, db]);
 
   return (
     <StatisticsContext.Provider value={values}>
