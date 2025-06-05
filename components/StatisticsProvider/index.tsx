@@ -38,7 +38,6 @@ export default function StatisticsProvider({ children }: { children: ReactNode }
     }
   }
 
-
   const values = useMemo<StatisticsContextType>(() => {
     return { file, setFile, db, resetDb };
   }, [file, db]);

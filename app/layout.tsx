@@ -6,11 +6,13 @@ import weekday from 'dayjs/plugin/weekday';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import isYesterday from 'dayjs/plugin/isYesterday';
-import { SiteHeader } from '@/components/Header';
+import { Header } from '@/components/Header';
 import StatisticsProvider from '@/components/StatisticsProvider';
 import { ReactNode } from 'react';
 import Footer from '@/components/Footer';
 import Script from 'next/script';
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from '@/components/AppSidebar';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekday);
@@ -51,11 +53,17 @@ export default function RootLayout({
       className={`${inter.variable} antialiased`}
     >
     <StatisticsProvider>
-      <div className="flex flex-col min-h-screen">
-        <SiteHeader />
-        {children}
-        <Footer />
-      </div>
+      <SidebarProvider>
+        <AppSidebar />
+
+        <SidebarInset>
+          <Header />
+
+          {children}
+
+          <Footer />
+        </SidebarInset>
+      </SidebarProvider>
     </StatisticsProvider>
     </body>
     </html>
