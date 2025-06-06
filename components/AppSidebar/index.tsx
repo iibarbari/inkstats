@@ -20,6 +20,7 @@ import {
 const menu = {
   summary: [
     { title: 'Reading progress', url: '/reading-progress' },
+    { title: 'Current progress', url: '/current-progress' },
   ],
   timeRange: [
     { title: 'All books', url: '/time-range/all-books' },
