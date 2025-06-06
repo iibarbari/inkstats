@@ -26,9 +26,10 @@ const menu = {
     { title: 'All books', url: '/time-range/all-books' },
     { title: 'Books by week', url: '/time-range/books-by-week' },
     { title: 'Books by month', url: '/time-range/books-by-month' },
+    { title: 'Last week', url: '/time-range/last-week' },
     { title: 'Last month by day', url: '/time-range/books-by-year' },
-    { title: 'Last year by day', url: '/time-range/books-by-year' },
     { title: 'Last year by week', url: '/time-range/books-by-year' },
+    { title: 'All stats by month', url: '/time-range/all-stats-by-month' },
   ],
   calendarView: [
     { title: 'Monthly view', url: '/calender-view/monthly-view' },

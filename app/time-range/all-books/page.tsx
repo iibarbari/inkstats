@@ -106,7 +106,7 @@ export default function AllBooksPage() {
   return (
     <main className="flex-grow-1 flex flex-col gap-12 my-16">
       <section className="container">
-        <h1 className="text-2xl font-bold mb-4">All Books</h1>
+        <h1 className="text-2xl font-bold mb-4">All books</h1>
 
         <p className="text-muted-foreground mb-4">
           Total time spent reading: {dayjs.duration(totalTimeSpentReading, 'seconds').format("HH:mm:ss")}
